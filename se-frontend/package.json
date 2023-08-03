@@ -10,6 +10,7 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.0.10",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
     "antd": "^5.8.0",

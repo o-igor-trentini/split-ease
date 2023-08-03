@@ -13,4 +13,10 @@ export const GlobalStyle = createGlobalStyle<ThemeType>`
   ::selection {
     color: ${({ colorPrimary }) => colorPrimary};
   }
+
+  // Corrige situação onde prop 'gutter' do componente 'Row' gera overflow.
+  .ant-row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
 `;
