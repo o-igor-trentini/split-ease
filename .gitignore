@@ -2,3 +2,6 @@
 .idea
 .vscode
 
+# Variáveis de ambiente
+.env
+
