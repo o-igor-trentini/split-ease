@@ -51,7 +51,7 @@ const ChangePassword: NextPage = (): ReactElement => {
                             hasFeedback
                             rules={[Rules.required, ...Rules.password]}
                         >
-                            <Input id="password" type="password" placeholder="Nova senha" />
+                            <Input id="password" type="password" placeholder="Nova senha" maxLength={100} />
                         </FormItem>
                     </Col>
 
@@ -62,7 +62,12 @@ const ChangePassword: NextPage = (): ReactElement => {
                             hasFeedback
                             rules={[Rules.required, Validators.password]}
                         >
-                            <Input id="passwordConfirmation" type="password" placeholder="Confirme a senha" />
+                            <Input
+                                id="passwordConfirmation"
+                                type="password"
+                                placeholder="Confirme a senha"
+                                maxLength={100}
+                            />
                         </FormItem>
                     </Col>
 

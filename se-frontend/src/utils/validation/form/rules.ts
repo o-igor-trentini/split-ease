@@ -13,6 +13,10 @@ export const Rules: RulesType = {
             message: 'Mín. 8 caracteres',
         },
         {
+            max: 100,
+            message: 'Máx. 100 caracteres',
+        },
+        {
             pattern: new RegExp(/^(?=.*[!@#$%^&*])/),
             message: 'Mín. 1 caractere especial',
         },

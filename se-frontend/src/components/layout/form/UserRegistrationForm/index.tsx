@@ -87,6 +87,7 @@ export const UserRegistrationForm: FC = (): ReactElement => {
                     id: 'password',
                     placeholder: 'Senha',
                     type: 'password',
+                    maxLength: 100,
                 },
                 formItem: {
                     name: 'password',
@@ -100,6 +101,7 @@ export const UserRegistrationForm: FC = (): ReactElement => {
                     id: 'passwordConfirmation',
                     placeholder: 'Confirme a senha',
                     type: 'password',
+                    maxLength: 100,
                 },
                 formItem: {
                     name: 'passwordConfirmation',

@@ -45,7 +45,7 @@ export const SignInForm: FC = (): ReactElement => {
 
                 <Col span={24}>
                     <FormItem name="password" label="Senha" rules={[Rules.required]}>
-                        <Input id="password" placeholder="Senha" type="password" />
+                        <Input id="password" placeholder="Senha" type="password" maxLength={100} />
                     </FormItem>
                 </Col>
 
