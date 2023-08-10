@@ -1,4 +1,4 @@
-# Split Ease - Frondend  #
+# Split Ease - Frontend  #
 
 ## Iniciando
 
