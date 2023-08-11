@@ -1,8 +1,12 @@
 import { FC, ReactElement, ReactNode } from 'react';
-import { Form as AntdForm, FormProps as AntdFormProps } from 'antd';
+import { Form as AntdForm, FormInstance as AntdFormInstance, FormProps as AntdFormProps } from 'antd';
 import { makeComponentId, makeTestId } from '@/utils/test';
+import { FieldData as AntdFieldData } from 'rc-field-form/lib/interface';
 
 export const useForm = AntdForm.useForm;
+
+export type FormInstance<T> = AntdFormInstance<T>;
+export type FieldData = AntdFieldData;
 
 export interface FormProps {
     children?: ReactNode;

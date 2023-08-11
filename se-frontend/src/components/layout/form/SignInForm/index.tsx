@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { Rules } from '@/utils/validation/form/rules';
 
 interface SignInFormFields {
-    user: string;
+    username: string;
     password: string;
 }
 
@@ -38,8 +38,8 @@ export const SignInForm: FC = (): ReactElement => {
         <Form id="login" form={form} onFinish={handleFinish}>
             <Row gutter={[0, 12]}>
                 <Col span={24}>
-                    <FormItem name="user" label="Usuário" rules={[Rules.required]}>
-                        <Input id="user" placeholder="Usuário ou e-mail" />
+                    <FormItem name="username" label="Usuário" rules={[Rules.required]}>
+                        <Input id="username" placeholder="Usuário ou e-mail" />
                     </FormItem>
                 </Col>
 

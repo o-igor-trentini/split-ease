@@ -4,7 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"se-backend/config/validations"
 	"se-backend/controller"
-	request "se-backend/controller/model/request/user"
+	"se-backend/controller/model/request"
+	"se-backend/model"
+	"se-backend/view"
 )
 
 func (co userImpl) Create(c *gin.Context) {
@@ -15,5 +17,18 @@ func (co userImpl) Create(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, "Criado")
+	domain := model.NewUserDomain(
+		userRequest.FirstName,
+		userRequest.LastName,
+		userRequest.Email,
+		userRequest.Username,
+		userRequest.Password,
+	)
+
+	if err := co.service.Create(domain); err != nil {
+		controller.RespondWithError(c, err)
+		return
+	}
+
+	c.JSON(201, view.UserDomainToResponse(domain))
 }

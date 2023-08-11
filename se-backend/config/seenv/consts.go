@@ -17,6 +17,14 @@ const (
 	// Sentry
 	envSentryDSN         string = "SENTRY_DSN"
 	envSentryEnvironment string = "SENTRY_ENVIRONMENT"
+
+	// Banco de dados
+	envDatabaseHost     string = "DB_HOST"
+	envDatabasePort     string = "DB_PORT"
+	envDatabaseUser     string = "DB_USER"
+	envDatabasePassword string = "DB_PASSWORD"
+	envDatabaseName     string = "DB_NAME"
+	envDatabaseSchema   string = "DB_SCHEMA"
 )
 
 // Possíveis valores das variáveis de ambiente
@@ -52,4 +60,10 @@ type ENVType struct {
 	LogOutPut         string
 	SentryDSN         string
 	SentryEnvironment string
+	DatabaseHost      string
+	DatabasePort      string
+	DatabaseUser      string
+	DatabasePassword  string
+	DatabaseName      string
+	DatabaseSchema    string
 }

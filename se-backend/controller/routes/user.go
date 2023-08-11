@@ -6,10 +6,8 @@ import (
 )
 
 // newUser instância as rotas de usuário.
-func newUser(r *gin.RouterGroup) {
-	co := controller.NewUser()
-
-	base := r.Group("/user")
+func newUser(r *gin.RouterGroup, co controller.UserController) {
+	base := r.Group("/user", Cors)
 	{
 		base.POST("", co.Create)
 	}

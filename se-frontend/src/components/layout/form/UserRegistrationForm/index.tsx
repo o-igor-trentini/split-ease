@@ -9,13 +9,11 @@ import { Row } from '@/components/ui/Row';
 import { Col } from '@/components/ui/Col';
 import { Rules } from '@/utils/validation/form/rules';
 import { Validators } from '@/utils/validation/form/validator';
+import { createUser } from '@/api/user';
+import { User } from '@/api/user/types';
+import { errorHandler } from '@/utils/errorHandler';
 
-interface UserRegistrationFormFields {
-    firstName: string;
-    lastName: string;
-    email: string;
-    user: string;
-    password: string;
+export interface UserRegistrationFormFields extends User {
     passwordConfirmation: string;
 }
 
@@ -27,14 +25,15 @@ export const UserRegistrationForm: FC = (): ReactElement => {
         try {
             setLoading(true);
 
-            console.log('### value', values);
+            await createUser(values);
         } catch (err: unknown) {
-            alert(err);
+            errorHandler({ exception: err, message: 'Não foi possível cadastrar o usuário!', form });
         } finally {
             setLoading(false);
         }
     };
 
+    // TODO: Adicionar limites de caracteres no formulário
     const items = useMemo<{ formItem: FormItemProps; input: InputProps }[]>(
         () => [
             {
@@ -73,11 +72,11 @@ export const UserRegistrationForm: FC = (): ReactElement => {
             },
             {
                 input: {
-                    id: 'user',
+                    id: 'username',
                     placeholder: 'Usuário',
                 },
                 formItem: {
-                    name: 'user',
+                    name: 'username',
                     label: 'Usuário',
                     rules: [Rules.required],
                 },

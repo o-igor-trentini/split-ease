@@ -7,10 +7,8 @@ import (
 	ptBRLocale "github.com/go-playground/locales/pt_BR"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
-	"se-backend/config/seerror"
-	"se-backend/config/selog"
-
 	ptBRTranslation "github.com/go-playground/validator/v10/translations/pt_BR"
+	"se-backend/config/seerror"
 )
 
 var (
@@ -39,7 +37,7 @@ func Validate(validationErr error) seerror.SEError {
 	var jsonValidationError validator.ValidationErrors
 
 	if errors.As(validationErr, &jsonErr) {
-		res = seerror.NewBadRequestErr("Tipo de campo inválido")
+		res = seerror.NewBadRequestErr("Tipo de campo inválido", res)
 	} else if errors.As(validationErr, &jsonValidationError) {
 		causes := make([]seerror.Cause, 0)
 
@@ -52,11 +50,10 @@ func Validate(validationErr error) seerror.SEError {
 			causes = append(causes, cause)
 		}
 
-		res = seerror.NewUnprocessableEntityErr("Campos inválidos", causes)
+		res = seerror.NewUnprocessableEntityErr("Campos inválidos", res, causes)
 	} else {
-		res = seerror.NewBadRequestErr("Não foi possível converter os campos")
+		res = seerror.NewBadRequestErr("Não foi possível converter os campos", res)
 	}
 
-	selog.Error(res.GetMessage(), res)
 	return res
 }

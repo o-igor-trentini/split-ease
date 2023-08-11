@@ -37,8 +37,8 @@ const RecoverPassword: NextPage = (): ReactElement => {
             <Form id="changePassword" form={form} onFinish={handleFinish}>
                 <Row gutter={[0, 12]} justify="center" align="middle">
                     <Col span={24}>
-                        <FormItem name="user" label="Usuário" rules={[Rules.required]}>
-                            <Input id="user" placeholder="Usuário ou e-mail" />
+                        <FormItem name="username" label="Usuário" rules={[Rules.required]}>
+                            <Input id="username" placeholder="Usuário ou e-mail" />
                         </FormItem>
                     </Col>
 

@@ -49,7 +49,7 @@ const Home: NextPage = (): ReactElement => {
                             { key: 'Cadastrar', label: 'Cadastrar', children: <UserRegistrationForm /> },
                         ]}
                         tabProps={{ type: 'card' }}
-                        style={{ height: '100vh' }}
+                        style={{ minHeight: '100vh' }}
                     />
                 </Col>
             </Row>

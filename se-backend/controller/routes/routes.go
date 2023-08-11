@@ -1,8 +1,18 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	userController "se-backend/controller/user"
+)
 
-func Init(r *gin.RouterGroup) {
-	newHealth(r)
-	newUser(r)
+type InitDependencies struct {
+	UserCo userController.UserController
+}
+
+func Init(rEngine *gin.Engine, dependencies InitDependencies) {
+	rEngine.NoRoute(Cors)
+	rg := rEngine.Group("/api")
+
+	newHealth(rg)
+	newUser(rg, dependencies.UserCo)
 }

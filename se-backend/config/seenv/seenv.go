@@ -42,6 +42,14 @@ func Init() {
 			Name:     envSentryEnvironment,
 			Expected: []string{SentryEnvironmentDevelopment, SentryEnvironmentStaging, SentryEnvironmentProduction},
 		},
+
+		// Banco de dados
+		{Name: envDatabaseHost},
+		{Name: envDatabasePort},
+		{Name: envDatabaseUser},
+		{Name: envDatabasePassword},
+		{Name: envDatabaseName},
+		{Name: envDatabaseSchema},
 	}
 
 	values, err := uenv.CheckEnvs(list)
@@ -58,5 +66,11 @@ func Init() {
 		LogOutPut:         values[envLogOutput],
 		SentryDSN:         values[envSentryDSN],
 		SentryEnvironment: values[envSentryEnvironment],
+		DatabaseHost:      values[envDatabaseHost],
+		DatabasePort:      values[envDatabasePort],
+		DatabaseUser:      values[envDatabaseUser],
+		DatabasePassword:  values[envDatabasePassword],
+		DatabaseName:      values[envDatabaseName],
+		DatabaseSchema:    values[envDatabaseSchema],
 	}
 }

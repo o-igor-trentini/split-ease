@@ -1,43 +1,44 @@
 package seerror
 
-import "net/http"
+import (
+	"net/http"
+)
 
-// New cria uma instância de erro SEError.
-func New(code int, message, err string, causes []Cause) SEError {
-	return &seErrorImpl{
-		Code:    code,
-		Message: message,
-		Err:     err,
-		Causes:  causes,
-	}
-}
+const (
+	ErrBadRequest          = "bad_request"
+	ErrUnauthorized        = "unauthorized"
+	ErrForbidden           = "forbidden"
+	ErrNotFound            = "not_found"
+	ErrUnprocessableEntity = "unprocessable_entity"
+	ErrInternalServerError = "internal_server_error"
+)
 
 // NewBadRequestErr gera um erro pre-formatado para HTTP status code 400.
-func NewBadRequestErr(message string) SEError {
-	return New(http.StatusBadRequest, message, "bad_request", nil)
+func NewBadRequestErr(message string, source error) SEError {
+	return New(http.StatusBadRequest, message, ErrBadRequest, nil, source)
 }
 
 // NewUnauthorizedErr gera um erro pre-formatado para HTTP status code 401.
-func NewUnauthorizedErr(message string) SEError {
-	return New(http.StatusUnauthorized, message, "unauthorized", nil)
+func NewUnauthorizedErr(message string, source error) SEError {
+	return New(http.StatusUnauthorized, message, ErrUnauthorized, nil, source)
 }
 
 // NewForbiddenErr gera um erro pre-formatado para HTTP status code 403.
-func NewForbiddenErr(message string) SEError {
-	return New(http.StatusForbidden, message, "forbidden", nil)
+func NewForbiddenErr(message string, source error) SEError {
+	return New(http.StatusForbidden, message, ErrForbidden, nil, source)
 }
 
 // NewNotFoundErr gera um erro pre-formatado para HTTP status code 404.
-func NewNotFoundErr(message string) SEError {
-	return New(http.StatusNotFound, message, "not_found", nil)
+func NewNotFoundErr(message string, source error) SEError {
+	return New(http.StatusNotFound, message, ErrNotFound, nil, source)
 }
 
 // NewUnprocessableEntityErr gera um erro pre-formatado para HTTP status code 422.
-func NewUnprocessableEntityErr(message string, causes []Cause) SEError {
-	return New(http.StatusUnprocessableEntity, message, "unprocessable_entity", causes)
+func NewUnprocessableEntityErr(message string, source error, causes []Cause) SEError {
+	return New(http.StatusUnprocessableEntity, message, ErrUnprocessableEntity, causes, source)
 }
 
 // NewsInternalServerErrorErr gera um erro pre-formatado para HTTP status code 500.
-func NewsInternalServerErrorErr(message string) SEError {
-	return New(http.StatusInternalServerError, message, "internal_server_error", nil)
+func NewsInternalServerErrorErr(message string, source error) SEError {
+	return New(http.StatusInternalServerError, message, ErrInternalServerError, nil, source)
 }
