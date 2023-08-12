@@ -40,7 +40,7 @@ export const errorHandler = <T,>({ message, exception, form }: errorHandlerProps
                     name: item.field,
                     errors: [capitalizeFirstLetter(item.message.replace(item.field, '').trim())],
                 });
-        if (form) form?.setFields(fields);
+        if (form) form.setFields(fields);
 
         toast({ type: 'error', content: data.message });
         return;
