@@ -46,5 +46,5 @@ export const errorHandler = <T,>({ message, exception, form }: errorHandlerProps
         return;
     }
 
-    toast({ type: 'error', content: message });
+    toast({ type: 'error', content: data.message });
 };

@@ -3,6 +3,7 @@ import { FormItemRule } from '@/components/ui/Form/Item';
 interface RulesType {
     required: FormItemRule;
     password: FormItemRule[];
+    username: FormItemRule[];
 }
 
 export const Rules: RulesType = {
@@ -31,6 +32,16 @@ export const Rules: RulesType = {
         {
             pattern: new RegExp(/^(?=.*[0-9])/),
             message: 'Mín. 1 número',
+        },
+    ],
+    username: [
+        {
+            max: 50,
+            message: 'Máx. 50 caracteres',
+        },
+        {
+            pattern: new RegExp(/^[A-Za-z0-9\-_.]+$/),
+            message: 'Aceita apenas letras maiúsculas e minúsculas, números e os caracteres "-", "_", e "."!',
         },
     ],
 };

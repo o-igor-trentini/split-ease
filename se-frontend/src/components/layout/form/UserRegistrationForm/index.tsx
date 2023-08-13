@@ -12,6 +12,7 @@ import { Validators } from '@/utils/validation/form/validator';
 import { createUser } from '@/api/user';
 import { User } from '@/api/user/types';
 import { errorHandler } from '@/utils/errorHandler';
+import { toast } from '@/components/ui/toast';
 
 export interface UserRegistrationFormFields extends User {
     passwordConfirmation: string;
@@ -26,6 +27,8 @@ export const UserRegistrationForm: FC = (): ReactElement => {
             setLoading(true);
 
             await createUser(values);
+
+            toast({ type: 'success', content: 'Usuário criado!' });
         } catch (err: unknown) {
             errorHandler({ exception: err, message: 'Não foi possível cadastrar o usuário!', form });
         } finally {
@@ -33,7 +36,6 @@ export const UserRegistrationForm: FC = (): ReactElement => {
         }
     };
 
-    // TODO: Adicionar limites de caracteres no formulário
     const items = useMemo<{ formItem: FormItemProps; input: InputProps }[]>(
         () => [
             {
@@ -45,6 +47,7 @@ export const UserRegistrationForm: FC = (): ReactElement => {
                 input: {
                     id: 'firstName',
                     placeholder: 'Nome',
+                    maxLength: 50,
                 },
             },
             {
@@ -56,6 +59,7 @@ export const UserRegistrationForm: FC = (): ReactElement => {
                 input: {
                     id: 'lastName',
                     placeholder: 'Sobrenome',
+                    maxLength: 50,
                 },
             },
             {
@@ -74,11 +78,13 @@ export const UserRegistrationForm: FC = (): ReactElement => {
                 input: {
                     id: 'username',
                     placeholder: 'Usuário',
+                    maxLength: 50,
                 },
                 formItem: {
                     name: 'username',
                     label: 'Usuário',
-                    rules: [Rules.required],
+                    rules: [Rules.required, ...Rules.username],
+                    hasFeedback: true,
                 },
             },
             {
