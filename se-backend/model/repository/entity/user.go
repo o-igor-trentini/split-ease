@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type UserEntity struct {
+type User struct {
 	ID        uint64         `gorm:"column:us_id;primaryKey;autoIncrement"`
 	CreatedAt time.Time      `gorm:"column:us_created_at;not null"`
 	UpdatedAt time.Time      `gorm:"column:us_updated_at;not null"`
@@ -17,6 +17,6 @@ type UserEntity struct {
 	Password  string         `gorm:"column:us_password;type:varchar(255);not null"`
 }
 
-func (*UserEntity) TableName() string {
+func (*User) TableName() string {
 	return "us_users"
 }

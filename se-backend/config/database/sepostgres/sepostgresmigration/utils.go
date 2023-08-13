@@ -7,6 +7,7 @@ import (
 	"se-backend/config/seenv"
 	"se-backend/config/selog"
 	"se-backend/model/repository/entity"
+	"strings"
 	"time"
 )
 
@@ -52,6 +53,17 @@ func CreateDatabaseStructure(db *gorm.DB) {
 	handleStepError(tx, "Não foi possível criar os enumerators", createEnums(tx))
 	handleStepError(tx, "Não foi possível criar as tabelas", createTables(tx))
 
+	handleStepError(
+		tx,
+		"Não foi possível criar a constraint unique do nome de usuário do usuário",
+		createUniqueConstraint(tx, "us_users", []string{"us_username"}),
+	)
+	handleStepError(
+		tx,
+		"Não foi possível criar a constraint unique do e-mail do usuário",
+		createUniqueConstraint(tx, "us_users", []string{"us_email"}),
+	)
+
 	tx.Commit()
 }
 
@@ -65,11 +77,23 @@ func createEnums(db *gorm.DB) error {
 	return nil
 }
 
+// createUniqueConstraint cria uma constraint de colunas únicas em uma tabela.
+func createUniqueConstraint(db *gorm.DB, table string, columns []string) error {
+	return db.
+		Exec(fmt.Sprintf(
+			"ALTER TABLE %s ADD CONSTRAINT %s UNIQUE (%s)",
+			table,
+			"un_"+table+"_"+strings.Join(columns, "_"),
+			strings.Join(columns, ", "),
+		)).
+		Error
+}
+
 // createTables cria as tabelas caso não existam.
 // Sempre que um model (referente a uma tabela) for criado, ele deve ser referênciado aqui.
 func createTables(db *gorm.DB) error {
 	return db.AutoMigrate(
 		&entity.Migration{},
-		&entity.UserEntity{},
+		&entity.User{},
 	)
 }

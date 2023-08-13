@@ -63,6 +63,33 @@ func register(tag, tagMsg string, validationFunc validator.Func) {
 
 }
 
+// userFormat registra a validação customizada de formato do usuário.
+func userFormat() {
+	var v validator.Func = func(fl validator.FieldLevel) bool {
+		if username, ok := fl.Field().Interface().(string); ok {
+			usernameLen := len(username)
+
+			if usernameLen < 0 || usernameLen > 50 {
+				return false
+			}
+
+			if !regexp.MustCompile(`^[A-Za-z0-9\-_.]+$`).MatchString(username) {
+				return false
+			}
+
+			return true
+		}
+
+		return true
+	}
+
+	register(
+		"userformat",
+		`{0} aceita apenas letras maiúsculas e minúsculas, números e os caracteres "-", "_", e "."!`,
+		v,
+	)
+}
+
 // strongPass registra a validação customizada de senha forte.
 func strongPass() {
 	var v validator.Func = func(fl validator.FieldLevel) bool {

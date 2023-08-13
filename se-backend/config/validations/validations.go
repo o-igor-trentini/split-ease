@@ -28,6 +28,7 @@ func init() {
 		bindingWithJSONTag()
 	}
 
+	userFormat()
 	strongPass()
 }
 

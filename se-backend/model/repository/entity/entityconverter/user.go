@@ -5,8 +5,8 @@ import (
 	"se-backend/model/repository/entity"
 )
 
-func UserDomainToEntity(userDomain model.UserDomainInterface) entity.UserEntity {
-	return entity.UserEntity{
+func UserDomainToEntity(userDomain model.UserDomainInterface) entity.User {
+	return entity.User{
 		ID:        userDomain.GetID(),
 		FirstName: userDomain.GetFirstName(),
 		LastName:  userDomain.GetLastName(),
@@ -15,7 +15,7 @@ func UserDomainToEntity(userDomain model.UserDomainInterface) entity.UserEntity 
 	}
 }
 
-func UserEntityToDomain(userEntity entity.UserEntity) model.UserDomainInterface {
+func UserEntityToDomain(userEntity entity.User) model.UserDomainInterface {
 	domain := model.NewUserDomain(
 		userEntity.FirstName,
 		userEntity.LastName,
