@@ -3,18 +3,17 @@ package service
 import (
 	"se-backend/config/seerror"
 	"se-backend/model"
-	"se-backend/model/repository/entity"
 )
 
 func (s userDomainService) Create(userDomain model.UserDomainInterface) seerror.SEError {
 	userDomain.EncryptPassword()
 
-	usernameUser, err := s.FindOneByUser(userDomain.GetUsername())
+	usernameUser, err := s.FindOneByUsername(userDomain.GetUsername())
 	if err != nil && err.GetErr() != seerror.ErrNotFound {
 		return err
 	}
 
-	if userDomain.GetUsername() == usernameUser.Username {
+	if userDomain.GetUsername() == usernameUser.GetUsername() {
 		return seerror.NewBadRequestErr("Nome de usuário já cadastrado!", err)
 	}
 
@@ -23,17 +22,16 @@ func (s userDomainService) Create(userDomain model.UserDomainInterface) seerror.
 		return err
 	}
 
-	if userDomain.GetEmail() == emailUser.Email {
+	if userDomain.GetEmail() == emailUser.GetEmail() {
 		return seerror.NewBadRequestErr("E-mail já cadastrado!", err)
 	}
 
-	return s.repository.Create(userDomain)
-}
+	user, err := s.repository.Create(userDomain)
+	if err != nil {
+		return err
+	}
 
-func (s userDomainService) FindOneByUser(username string) (entity.User, seerror.SEError) {
-	return s.repository.FindOneByUser(username)
-}
+	userDomain.SetID(user.ID)
 
-func (s userDomainService) FindOneByEmail(email string) (entity.User, seerror.SEError) {
-	return s.repository.FindOneByEmail(email)
+	return nil
 }

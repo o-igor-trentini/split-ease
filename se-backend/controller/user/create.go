@@ -30,5 +30,7 @@ func (co userImpl) Create(c *gin.Context) {
 		return
 	}
 
+	// TODO: Criar verificação de conta do usuário por email.
+
 	c.JSON(201, view.UserDomainToResponse(domain))
 }

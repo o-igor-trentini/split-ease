@@ -8,3 +8,8 @@ type UserRequest struct {
 	Password             string `json:"password" binding:"required,strongpass"`
 	PasswordConfirmation string `json:"passwordConfirmation" binding:"required,eqfield=Password"`
 }
+
+type UserLoginRequest struct {
+	Username string `json:"username" binding:"required,min=1,max=50,userformat"`
+	Password string `json:"password" binding:"required,strongpass"`
+}

@@ -25,6 +25,9 @@ const (
 	envDatabasePassword string = "DB_PASSWORD"
 	envDatabaseName     string = "DB_NAME"
 	envDatabaseSchema   string = "DB_SCHEMA"
+
+	// JWT
+	envJWTSecretKey string = "JWT_SECRET_KEY"
 )
 
 // Possíveis valores das variáveis de ambiente
@@ -66,4 +69,5 @@ type ENVType struct {
 	DatabasePassword  string
 	DatabaseName      string
 	DatabaseSchema    string
+	JWTSecretKey      string
 }

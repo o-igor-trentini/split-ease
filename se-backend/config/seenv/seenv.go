@@ -50,6 +50,9 @@ func Init() {
 		{Name: envDatabasePassword},
 		{Name: envDatabaseName},
 		{Name: envDatabaseSchema},
+
+		// JWT
+		{Name: envJWTSecretKey},
 	}
 
 	values, err := uenv.CheckEnvs(list)
@@ -72,5 +75,6 @@ func Init() {
 		DatabasePassword:  values[envDatabasePassword],
 		DatabaseName:      values[envDatabaseName],
 		DatabaseSchema:    values[envDatabaseSchema],
+		JWTSecretKey:      values[envJWTSecretKey],
 	}
 }

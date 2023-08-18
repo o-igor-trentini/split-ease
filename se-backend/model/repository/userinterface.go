@@ -8,8 +8,8 @@ import (
 )
 
 type UserDomainRepository interface {
-	Create(userDomain model.UserDomainInterface) seerror.SEError
-	FindOneByUser(username string) (entity.User, seerror.SEError)
+	Create(userDomain model.UserDomainInterface) (entity.User, seerror.SEError)
+	FindOneByUsername(username string) (entity.User, seerror.SEError)
 	FindOneByEmail(email string) (entity.User, seerror.SEError)
 }
 

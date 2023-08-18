@@ -3,9 +3,13 @@ package model
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
+	"se-backend/config/seenv"
+	"se-backend/config/seerror"
 	"strings"
+	"time"
 )
 
 type UserDomainInterface interface {
@@ -19,6 +23,7 @@ type UserDomainInterface interface {
 	SetID(ID uint64)
 
 	EncryptPassword()
+	GenerateToken() (string, seerror.SEError)
 }
 
 type userDomain struct {
@@ -39,6 +44,13 @@ func NewUserDomain(firstName, lastName, email, username, password string) UserDo
 		email:     strings.ToLower(strings.TrimSpace(email)),
 		username:  strings.TrimSpace(username),
 		password:  password,
+	}
+}
+
+func NewUserLoginDomain(username, password string) UserDomainInterface {
+	return &userDomain{
+		username: strings.TrimSpace(username),
+		password: password,
 	}
 }
 
@@ -76,4 +88,23 @@ func (ud *userDomain) EncryptPassword() {
 	hash.Write([]byte(ud.password))
 
 	ud.password = hex.EncodeToString(hash.Sum(nil))
+}
+
+func (ud *userDomain) GenerateToken() (string, seerror.SEError) {
+	claims := jwt.MapClaims{
+		"id":        ud.id,
+		"firstName": ud.firstName,
+		"lastName":  ud.lastName,
+		"email":     ud.email,
+		"username":  ud.username,
+		"exp":       time.Now().Add(24 * time.Hour).Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	strToken, err := token.SignedString([]byte(seenv.ENV.JWTSecretKey))
+	if err != nil {
+		return strToken, seerror.NewsInternalServerErrorErr("Não foi possível gerar o token", err)
+	}
+
+	return strToken, nil
 }

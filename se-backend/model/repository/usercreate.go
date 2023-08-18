@@ -8,19 +8,17 @@ import (
 	"se-backend/utils/ugorm"
 )
 
-func (r userDomainRepository) Create(userDomain model.UserDomainInterface) seerror.SEError {
+func (r userDomainRepository) Create(userDomain model.UserDomainInterface) (entity.User, seerror.SEError) {
 	user := entityconverter.UserDomainToEntity(userDomain)
 
 	if err := r.db.Create(&user).Error; err != nil {
-		return seerror.NewsInternalServerErrorErr("Não foi possível criar o usuário", err)
+		return user, seerror.NewsInternalServerErrorErr("Não foi possível criar o usuário", err)
 	}
 
-	userDomain.SetID(user.ID)
-
-	return nil
+	return user, nil
 }
 
-func (r userDomainRepository) FindOneByUser(username string) (entity.User, seerror.SEError) {
+func (r userDomainRepository) FindOneByUsername(username string) (entity.User, seerror.SEError) {
 	var user entity.User
 
 	if err := r.db.Where("us_username", username).First(&user).Error; err != nil {

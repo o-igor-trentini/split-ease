@@ -4,13 +4,13 @@ import (
 	"se-backend/config/seerror"
 	"se-backend/model"
 	"se-backend/model/repository"
-	"se-backend/model/repository/entity"
 )
 
 type UserDomainService interface {
 	Create(userDomain model.UserDomainInterface) seerror.SEError
-	FindOneByUser(username string) (entity.User, seerror.SEError)
-	FindOneByEmail(email string) (entity.User, seerror.SEError)
+	FindOneByUsername(username string) (model.UserDomainInterface, seerror.SEError)
+	FindOneByEmail(email string) (model.UserDomainInterface, seerror.SEError)
+	Login(userDomain model.UserDomainInterface) (model.UserDomainInterface, string, seerror.SEError)
 }
 
 type userDomainService struct {
