@@ -108,3 +108,39 @@ func (ud *userDomain) GenerateToken() (string, seerror.SEError) {
 
 	return strToken, nil
 }
+
+func VerifyToken(value string) (UserDomainInterface, seerror.SEError) {
+	removeBearerPrefix := func(token string) string {
+		prefix := "Bearer "
+
+		if !strings.HasPrefix(token, prefix) {
+			return token
+		}
+
+		return strings.TrimPrefix(token, prefix)
+	}
+
+	token, err := jwt.Parse(removeBearerPrefix(value), func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); ok {
+			return []byte(seenv.ENV.JWTSecretKey), nil
+		}
+
+		return nil, seerror.NewBadRequestErr("Token inválido", nil)
+	})
+	if err != nil {
+		return nil, seerror.NewUnauthorizedErr("Token inválido", err)
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok || !token.Valid {
+		return nil, seerror.NewUnauthorizedErr("Token inválido", err)
+	}
+
+	return &userDomain{
+		id:        uint64(claims["id"].(float64)),
+		firstName: claims["firstName"].(string),
+		lastName:  claims["lastName"].(string),
+		email:     claims["email"].(string),
+		username:  claims["username"].(string),
+	}, nil
+}
