@@ -3,7 +3,8 @@ package uenv
 import (
 	"fmt"
 	"os"
-	"slices"
+	"se-backend/utils/uslice"
+
 	"strings"
 )
 
@@ -33,7 +34,7 @@ func CheckEnvs(table []CheckEnvTable) (map[string]string, error) {
 		}
 
 		if len(item.Expected) > 0 {
-			if !slices.Contains(item.Expected, v) {
+			if !uslice.Contains(item.Expected, v) {
 				wrong = append(wrong, fmt.Sprintf(`%s="%s"`, item.Name, v))
 			}
 		}

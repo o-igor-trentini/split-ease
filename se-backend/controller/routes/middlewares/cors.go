@@ -1,11 +1,11 @@
-package routes
+package middlewares
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func Cors(c *gin.Context) {
+func (md *middlewareImpl) Cors(c *gin.Context) {
 	if c.Request.Header.Get("origin") != "" {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", c.Request.Header.Get("origin"))
 	} else {

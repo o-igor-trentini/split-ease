@@ -12,6 +12,7 @@ import (
 	"se-backend/config/seenv"
 	"se-backend/config/selog"
 	"se-backend/controller/routes"
+	"se-backend/controller/routes/middlewares"
 	controller "se-backend/controller/user"
 	"se-backend/model/repository"
 	"se-backend/model/service"
@@ -37,11 +38,14 @@ func main() {
 }
 
 func initDependencies(db *gorm.DB) routes.InitDependencies {
+	middleware := middlewares.New()
+
 	userDomainRepository := repository.NewUserDomain(db)
 	userDomainService := service.NewUserDomain(userDomainRepository)
 
 	return routes.InitDependencies{
-		UserCo: controller.NewUser(userDomainService),
+		Middleware: middleware,
+		UserCo:     controller.NewUser(userDomainService),
 	}
 }
 

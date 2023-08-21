@@ -1,6 +1,6 @@
 module se-backend
 
-go 1.21
+go 1.20
 
 require (
 	github.com/getsentry/sentry-go v0.23.0
