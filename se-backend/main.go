@@ -5,7 +5,9 @@ import (
 	sentrygin "github.com/getsentry/sentry-go/gin"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"log"
 	"os"
+	"os/exec"
 	"se-backend/config"
 	"se-backend/config/database/sepostgres"
 	"se-backend/config/database/sepostgres/sepostgresmigration"
@@ -69,6 +71,17 @@ func args(db *gorm.DB) {
 		case "-mr", "--migrate-and-run":
 			sepostgresmigration.ExecMigrations(db)
 			return
+
+		case "-t", "--test":
+			cmd := exec.Command("go", "test", "-coverprofile", "cover.out")
+			if _, err := cmd.CombinedOutput(); err != nil {
+				log.Fatalf("[TESTE] Não foi possível gerar o teste de cobertura [erro: %s]", err)
+			}
+
+			cmd = exec.Command("go", "tool", "cover", "-html=cover.out")
+			if _, err := cmd.CombinedOutput(); err != nil {
+				log.Fatalf("[TESTE] Não foi possível gerar a visão de teste de cobertura em HTML [erro: %s]", err)
+			}
 		}
 	}
 
