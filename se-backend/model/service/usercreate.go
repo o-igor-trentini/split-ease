@@ -5,7 +5,7 @@ import (
 	"se-backend/model"
 )
 
-func (s userDomainService) Create(userDomain model.UserDomainInterface) seerror.SEError {
+func (s *userDomainService) Create(userDomain model.UserDomainInterface) seerror.SEError {
 	userDomain.EncryptPassword()
 
 	usernameUser, err := s.FindOneByUsername(userDomain.GetUsername())

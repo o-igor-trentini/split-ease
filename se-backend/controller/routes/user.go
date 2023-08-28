@@ -11,6 +11,6 @@ func newUser(r *gin.RouterGroup, md middlewares.Middleware, co controller.UserCo
 	base := r.Group("/user", md.Cors)
 	{
 		base.POST("/login", co.Login)
-		base.POST("", md.Auth, co.Create)
+		base.POST("", co.Create)
 	}
 }

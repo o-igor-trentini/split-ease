@@ -8,7 +8,7 @@ import (
 	"se-backend/utils/ugorm"
 )
 
-func (r userDomainRepository) Create(userDomain model.UserDomainInterface) (entity.User, seerror.SEError) {
+func (r *userDomainRepository) Create(userDomain model.UserDomainInterface) (entity.User, seerror.SEError) {
 	user := entityconverter.UserDomainToEntity(userDomain)
 
 	if err := r.db.Create(&user).Error; err != nil {
@@ -18,7 +18,7 @@ func (r userDomainRepository) Create(userDomain model.UserDomainInterface) (enti
 	return user, nil
 }
 
-func (r userDomainRepository) FindOneByUsername(username string) (entity.User, seerror.SEError) {
+func (r *userDomainRepository) FindOneByUsername(username string) (entity.User, seerror.SEError) {
 	var user entity.User
 
 	if err := r.db.Where("us_username", username).First(&user).Error; err != nil {
@@ -32,7 +32,7 @@ func (r userDomainRepository) FindOneByUsername(username string) (entity.User, s
 	return user, nil
 }
 
-func (r userDomainRepository) FindOneByEmail(email string) (entity.User, seerror.SEError) {
+func (r *userDomainRepository) FindOneByEmail(email string) (entity.User, seerror.SEError) {
 	var user entity.User
 
 	if err := r.db.Where("us_email", email).First(&user).Error; err != nil {
