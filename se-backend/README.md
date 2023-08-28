@@ -24,3 +24,36 @@ Por padrão o servidor irá utilizar [http://localhost:8080](http://localhost:80
 variáveis de ambiente.
 
 Após iniciar o projeto, verifique se o servidor inicializou clicando [aqui](http://localhost:8080/api/health). 
+
+## Facilitadores ##
+
+Foram adicionados alguns facilitadores para agilizar e padronizar algumas ações. Esses facilitadores são executados ao
+executar o projeto passando algum parâmetro.
+
+> **Atenção:** Ao passar o parâmetro ```-mr``` ou ```-migrate-and-run```, pois ele inicia o servidor HTTP. Pode ser que algum
+> dos outros argumentos sejam ignorados. É recomendado usá-lo de forma individual.
+
+### Parâmetros ###
+- ```-cds``` ou ```-create-database-structure```
+    - Cria a estrutura do banco:
+      - Tabelas;
+      - Tipos de dados;
+      - Constraints;
+      - Executa ```migrations```;
+      - Entre outros.
+- ```-cm``` ou ```-create-migration```
+  - Cria um arquivo padronizado para escrever uma ```migration```.
+- ```-m``` ou ```-migrate```
+  - Executa as ```migrations```.
+- ```-mr``` ou ```-migrate-and-run```
+  - Executa as ```migrations``` e inicia o servidor HTTP. 
+- ```-t``` ou ```-test```
+  - Executa todos os testes do projeto e gera um relatório de cobertura
+
+### Utilização ###
+
+Para utilizar algum facilitador, utilize o seguinte comando na raiz do projeto:
+
+```bash
+go run main.go -t
+```
