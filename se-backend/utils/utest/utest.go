@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"testing"
 )
 
 type RepositorySuite[R, M any] struct {
@@ -18,9 +19,10 @@ type RepositorySuite[R, M any] struct {
 	Model M
 }
 
-func NewRepositorySuite[R, M any](initRepo func(db *gorm.DB) R) *RepositorySuite[R, M] {
+func NewRepositorySuite[R, M any](t *testing.T, initRepo func(db *gorm.DB) R) *RepositorySuite[R, M] {
 	var impl RepositorySuite[R, M]
 	impl.setup(initRepo)
+	impl.Suite.SetT(t)
 
 	return &impl
 }

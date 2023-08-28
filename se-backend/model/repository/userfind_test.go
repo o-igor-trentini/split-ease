@@ -75,7 +75,7 @@ func TestUserDomainRepository_FindOneByUsername(t *testing.T) {
 		},
 	}
 
-	s := utest.NewRepositorySuite[UserDomainRepository, model.UserDomainInterface](NewUserDomain)
+	s := utest.NewRepositorySuite[UserDomainRepository, model.UserDomainInterface](t, NewUserDomain)
 
 	for _, test := range table {
 		t.Run(test.name, func(t *testing.T) {
@@ -120,11 +120,11 @@ func TestUserDomainRepository_FindOneByUsername(t *testing.T) {
 			result := entityconverter.UserEntityToDomain(userEntity)
 
 			if test.expectErr.Expected {
-				assert.Zero(t, userEntity)
-				assert.Equal(t, test.expectErr.Value, err)
+				assert.Zero(s.T(), userEntity)
+				assert.Equal(s.T(), test.expectErr.Value, err)
 			} else {
-				assert.NoError(t, err)
-				assert.Equal(t, test.want, result)
+				assert.NoError(s.T(), err)
+				assert.Equal(s.T(), test.want, result)
 			}
 		})
 	}
@@ -192,7 +192,7 @@ func TestUserDomainRepository_FindOneByEmail(t *testing.T) {
 		},
 	}
 
-	s := utest.NewRepositorySuite[UserDomainRepository, model.UserDomainInterface](NewUserDomain)
+	s := utest.NewRepositorySuite[UserDomainRepository, model.UserDomainInterface](t, NewUserDomain)
 
 	for _, test := range table {
 		t.Run(test.name, func(t *testing.T) {
@@ -237,11 +237,11 @@ func TestUserDomainRepository_FindOneByEmail(t *testing.T) {
 			result := entityconverter.UserEntityToDomain(userEntity)
 
 			if test.expectErr.Expected {
-				assert.Zero(t, userEntity)
-				assert.Equal(t, test.expectErr.Value, err)
+				assert.Zero(s.T(), userEntity)
+				assert.Equal(s.T(), test.expectErr.Value, err)
 			} else {
-				assert.NoError(t, err)
-				assert.Equal(t, test.want, result)
+				assert.NoError(s.T(), err)
+				assert.Equal(s.T(), test.want, result)
 			}
 		})
 	}
