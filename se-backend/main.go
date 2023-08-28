@@ -73,12 +73,17 @@ func args(db *gorm.DB) {
 			return
 
 		case "-t", "--test":
-			cmd := exec.Command("go", "test", "-coverprofile", "cover.out")
+			cmd := exec.Command("go", "test", "./...", "-covermode=count", "-coverprofile=coverage.out")
 			if _, err := cmd.CombinedOutput(); err != nil {
 				log.Fatalf("[TESTE] Não foi possível gerar o teste de cobertura [erro: %s]", err)
 			}
 
-			cmd = exec.Command("go", "tool", "cover", "-html=cover.out")
+			//cmd = exec.Command("go", "tool", "cover", "-html=coverage.out")
+			//if _, err := cmd.CombinedOutput(); err != nil {
+			//	log.Fatalf("[TESTE] Não foi possível gerar a visão de teste de cobertura em HTML [erro: %s]", err)
+			//}
+
+			cmd = exec.Command("go", "tool", "cover", "-html=coverage.out", "-o", "coverage.html")
 			if _, err := cmd.CombinedOutput(); err != nil {
 				log.Fatalf("[TESTE] Não foi possível gerar a visão de teste de cobertura em HTML [erro: %s]", err)
 			}

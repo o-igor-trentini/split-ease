@@ -85,18 +85,34 @@ func buildLogger(cfg zap.Config) *zap.Logger {
 	return zapLogger
 }
 
+func loggerIsValid() bool {
+	return logger != nil
+}
+
 func Info(message string, tags ...zap.Field) {
+	if !loggerIsValid() {
+		return
+	}
+
 	logger.Info(message, tags...)
 	_ = logger.Sync()
 }
 
 func Error(message string, err error, tags ...zap.Field) {
+	if !loggerIsValid() {
+		return
+	}
+
 	tags = append(tags, zap.NamedError("error", err))
 	logger.Error(message, tags...)
 	_ = logger.Sync()
 }
 
 func Fatal(message string, err error, tags ...zap.Field) {
+	if !loggerIsValid() {
+		return
+	}
+
 	tags = append(tags, zap.NamedError("fatal", err))
 	logger.Fatal(message, tags...)
 	_ = logger.Sync()
