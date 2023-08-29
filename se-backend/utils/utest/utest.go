@@ -53,12 +53,3 @@ func (rs *RepositorySuite[R, M]) TearDownTest() {
 	// Verifica se todas as exigências do teste foram compridas.
 	assert.NoError(rs.T(), rs.Mock.ExpectationsWereMet())
 }
-
-func (rs *RepositorySuite[R, M]) TearDownSuite() {
-	// Fecha a conexão com o banco de dados
-	sqlDB, err := rs.db.DB()
-	assert.NoError(rs.T(), err)
-
-	err = sqlDB.Close()
-	assert.NoError(rs.T(), err)
-}

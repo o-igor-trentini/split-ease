@@ -12,6 +12,7 @@ func UserDomainToEntity(userDomain model.UserDomainInterface) entity.User {
 		LastName:  userDomain.GetLastName(),
 		Email:     userDomain.GetEmail(),
 		Username:  userDomain.GetUsername(),
+		Password:  userDomain.GetPassword(),
 	}
 }
 

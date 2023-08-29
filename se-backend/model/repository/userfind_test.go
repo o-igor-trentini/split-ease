@@ -39,25 +39,19 @@ func TestUserDomainRepository_FindOneByUsername(t *testing.T) {
 		{
 			name: "Sucesso informando nome de usuário correto",
 			want: userDomain,
-			args: args{
-				username: "igor",
-			},
+			args: args{username: "igor"},
 		},
 		{
 			name: "Falha informando nome de usuário não existente",
-			want: nil,
 			expectErr: utest.Error{
 				Expected:  true,
 				Value:     seerror.NewNotFoundErr("Usuário não encontrado", gorm.ErrRecordNotFound),
 				MockValue: gorm.ErrRecordNotFound,
 			},
-			args: args{
-				username: "trentini",
-			},
+			args: args{username: "trentini"},
 		},
 		{
 			name: "Falha por instância do banco de dados inválida",
-			want: nil,
 			expectErr: utest.Error{
 				Expected:  true,
 				Value:     seerror.NewsInternalServerErrorErr("Não foi possível buscar o usuário", gorm.ErrInvalidDB),
@@ -66,7 +60,6 @@ func TestUserDomainRepository_FindOneByUsername(t *testing.T) {
 		},
 		{
 			name: "Falha por transação inválida",
-			want: nil,
 			expectErr: utest.Error{
 				Expected:  true,
 				Value:     seerror.NewsInternalServerErrorErr("Não foi possível buscar o usuário", gorm.ErrInvalidTransaction),
@@ -77,10 +70,10 @@ func TestUserDomainRepository_FindOneByUsername(t *testing.T) {
 
 	s := utest.NewRepositorySuite[UserDomainRepository, model.UserDomainInterface](t, NewUserDomain)
 
-	for _, test := range table {
-		t.Run(test.name, func(t *testing.T) {
+	for _, tt := range table {
+		t.Run(tt.name, func(t *testing.T) {
 			var rows = new(sqlmock.Rows)
-			if test.want != nil {
+			if tt.want != nil {
 				now := time.Now()
 
 				rows = sqlmock.
@@ -96,15 +89,15 @@ func TestUserDomainRepository_FindOneByUsername(t *testing.T) {
 						"us_password",
 					}).
 					AddRow(
-						test.want.GetID(),
+						tt.want.GetID(),
 						now,
 						now,
 						nil,
-						test.want.GetFirstName(),
-						test.want.GetLastName(),
-						test.want.GetEmail(),
-						test.want.GetUsername(),
-						test.want.GetPassword(),
+						tt.want.GetFirstName(),
+						tt.want.GetLastName(),
+						tt.want.GetEmail(),
+						tt.want.GetUsername(),
+						tt.want.GetPassword(),
 					)
 			}
 
@@ -112,20 +105,22 @@ func TestUserDomainRepository_FindOneByUsername(t *testing.T) {
 				ExpectQuery(
 					regexp.QuoteMeta(`SELECT * FROM "us_users" WHERE "us_username" = $1 AND "us_users"."us_deleted_at" IS NULL ORDER BY "us_users"."us_id" LIMIT 1`),
 				).
-				WithArgs(test.args.username).
-				WillReturnError(test.expectErr.MockValue).
+				WithArgs(tt.args.username).
+				WillReturnError(tt.expectErr.MockValue).
 				WillReturnRows(rows)
 
-			userEntity, err := s.Repo.FindOneByUsername(test.args.username)
+			userEntity, err := s.Repo.FindOneByUsername(tt.args.username)
 			result := entityconverter.UserEntityToDomain(userEntity)
 
-			if test.expectErr.Expected {
+			if tt.expectErr.Expected {
 				assert.Zero(s.T(), userEntity)
-				assert.Equal(s.T(), test.expectErr.Value, err)
+				assert.Equal(s.T(), tt.expectErr.Value, err)
 			} else {
 				assert.NoError(s.T(), err)
-				assert.Equal(s.T(), test.want, result)
+				assert.Equal(s.T(), tt.want, result)
 			}
+
+			s.TearDownTest()
 		})
 	}
 }
@@ -156,25 +151,19 @@ func TestUserDomainRepository_FindOneByEmail(t *testing.T) {
 		{
 			name: "Sucesso informando e-mail correto",
 			want: userDomain,
-			args: args{
-				email: "igor@gmail.com",
-			},
+			args: args{email: "igor@gmail.com"},
 		},
 		{
 			name: "Falha informando e-mail não existente",
-			want: nil,
 			expectErr: utest.Error{
 				Expected:  true,
 				Value:     seerror.NewNotFoundErr("Usuário não encontrado", gorm.ErrRecordNotFound),
 				MockValue: gorm.ErrRecordNotFound,
 			},
-			args: args{
-				email: "trentini@gmail.com",
-			},
+			args: args{email: "trentini@gmail.com"},
 		},
 		{
 			name: "Falha por instância do banco de dados inválida",
-			want: nil,
 			expectErr: utest.Error{
 				Expected:  true,
 				Value:     seerror.NewsInternalServerErrorErr("Não foi possível buscar o usuário", gorm.ErrInvalidDB),
@@ -183,7 +172,6 @@ func TestUserDomainRepository_FindOneByEmail(t *testing.T) {
 		},
 		{
 			name: "Falha por transação inválida",
-			want: nil,
 			expectErr: utest.Error{
 				Expected:  true,
 				Value:     seerror.NewsInternalServerErrorErr("Não foi possível buscar o usuário", gorm.ErrInvalidTransaction),
@@ -194,10 +182,10 @@ func TestUserDomainRepository_FindOneByEmail(t *testing.T) {
 
 	s := utest.NewRepositorySuite[UserDomainRepository, model.UserDomainInterface](t, NewUserDomain)
 
-	for _, test := range table {
-		t.Run(test.name, func(t *testing.T) {
+	for _, tt := range table {
+		t.Run(tt.name, func(t *testing.T) {
 			var rows = new(sqlmock.Rows)
-			if test.want != nil {
+			if tt.want != nil {
 				now := time.Now()
 
 				rows = sqlmock.
@@ -213,15 +201,15 @@ func TestUserDomainRepository_FindOneByEmail(t *testing.T) {
 						"us_password",
 					}).
 					AddRow(
-						test.want.GetID(),
+						tt.want.GetID(),
 						now,
 						now,
 						nil,
-						test.want.GetFirstName(),
-						test.want.GetLastName(),
-						test.want.GetEmail(),
-						test.want.GetUsername(),
-						test.want.GetPassword(),
+						tt.want.GetFirstName(),
+						tt.want.GetLastName(),
+						tt.want.GetEmail(),
+						tt.want.GetUsername(),
+						tt.want.GetPassword(),
 					)
 			}
 
@@ -229,20 +217,22 @@ func TestUserDomainRepository_FindOneByEmail(t *testing.T) {
 				ExpectQuery(
 					regexp.QuoteMeta(`SELECT * FROM "us_users" WHERE "us_email" = $1 AND "us_users"."us_deleted_at" IS NULL ORDER BY "us_users"."us_id" LIMIT 1`),
 				).
-				WithArgs(test.args.email).
-				WillReturnError(test.expectErr.MockValue).
+				WithArgs(tt.args.email).
+				WillReturnError(tt.expectErr.MockValue).
 				WillReturnRows(rows)
 
-			userEntity, err := s.Repo.FindOneByEmail(test.args.email)
+			userEntity, err := s.Repo.FindOneByEmail(tt.args.email)
 			result := entityconverter.UserEntityToDomain(userEntity)
 
-			if test.expectErr.Expected {
+			if tt.expectErr.Expected {
 				assert.Zero(s.T(), userEntity)
-				assert.Equal(s.T(), test.expectErr.Value, err)
+				assert.Equal(s.T(), tt.expectErr.Value, err)
 			} else {
 				assert.NoError(s.T(), err)
-				assert.Equal(s.T(), test.want, result)
+				assert.Equal(s.T(), tt.want, result)
 			}
+
+			s.TearDownTest()
 		})
 	}
 }
