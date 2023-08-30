@@ -110,7 +110,7 @@ func TestUserDomainRepository_Create(t *testing.T) {
 			result := entityconverter.UserEntityToDomain(userEntity)
 
 			if tt.expectErr.Expected {
-				assert.Equal(t, tt.expectErr.Value, err)
+				assert.Equal(s.T(), tt.expectErr.Value, err)
 				assert.Equal(s.T(), tt.want, result)
 				assert.True(s.T(), 0 == result.GetID())
 			} else {
