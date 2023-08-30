@@ -87,6 +87,7 @@ func TestUserDomainRepository_FindOneByUsername(t *testing.T) {
 						"us_email",
 						"us_username",
 						"us_password",
+						"us_verified",
 					}).
 					AddRow(
 						tt.want.GetID(),
@@ -98,6 +99,7 @@ func TestUserDomainRepository_FindOneByUsername(t *testing.T) {
 						tt.want.GetEmail(),
 						tt.want.GetUsername(),
 						tt.want.GetPassword(),
+						tt.want.GetVerified(),
 					)
 			}
 
@@ -199,6 +201,7 @@ func TestUserDomainRepository_FindOneByEmail(t *testing.T) {
 						"us_email",
 						"us_username",
 						"us_password",
+						"us_verified",
 					}).
 					AddRow(
 						tt.want.GetID(),
@@ -210,6 +213,7 @@ func TestUserDomainRepository_FindOneByEmail(t *testing.T) {
 						tt.want.GetEmail(),
 						tt.want.GetUsername(),
 						tt.want.GetPassword(),
+						tt.want.GetVerified(),
 					)
 			}
 

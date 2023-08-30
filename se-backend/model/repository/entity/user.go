@@ -15,6 +15,7 @@ type User struct {
 	Email     string         `gorm:"column:us_email;type:varchar(255);not null"`
 	Username  string         `gorm:"column:us_username;type:varchar(50);not null"`
 	Password  string         `gorm:"column:us_password;type:varchar(255);not null"`
+	Verified  bool           `gorm:"column:us_verified;type:bool;default:false;not null"`
 }
 
 func (*User) TableName() string {

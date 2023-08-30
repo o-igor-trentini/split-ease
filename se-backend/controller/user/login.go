@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"se-backend/config/validations"
 	"se-backend/controller"
 	"se-backend/controller/model/request"
@@ -26,5 +27,5 @@ func (co userImpl) Login(c *gin.Context) {
 	}
 
 	c.Header("Authorization", token)
-	c.JSON(200, view.UserDomainToResponse(user))
+	c.JSON(http.StatusOK, view.UserDomainToResponse(user))
 }

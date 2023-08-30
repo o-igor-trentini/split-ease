@@ -12,5 +12,6 @@ func UserDomainToResponse(userDomain model.UserDomainInterface) response.UserRes
 		LastName:  userDomain.GetLastName(),
 		Email:     userDomain.GetEmail(),
 		Username:  userDomain.GetUsername(),
+		Verified:  userDomain.GetVerified(),
 	}
 }

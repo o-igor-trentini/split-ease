@@ -6,4 +6,5 @@ type UserResponse struct {
 	LastName  string `json:"lastName"`
 	Email     string `json:"email"`
 	Username  string `json:"username"`
+	Verified  bool   `json:"verified"`
 }

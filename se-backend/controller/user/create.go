@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"se-backend/config/validations"
 	"se-backend/controller"
 	"se-backend/controller/model/request"
@@ -32,5 +33,5 @@ func (co userImpl) Create(c *gin.Context) {
 
 	// TODO: Criar verificação de conta do usuário por email.
 
-	c.JSON(201, view.UserDomainToResponse(domain))
+	c.JSON(http.StatusCreated, view.UserDomainToResponse(domain))
 }

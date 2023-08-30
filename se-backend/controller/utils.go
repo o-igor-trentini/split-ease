@@ -3,6 +3,7 @@ package controller
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"se-backend/config/seerror"
 	"se-backend/config/selog"
 	"se-backend/model"
@@ -30,5 +31,5 @@ func RespondWithError(c *gin.Context, res error) {
 	}
 
 	selog.Error("Erro desconhecido", res)
-	c.AbortWithStatusJSON(500, res)
+	c.AbortWithStatusJSON(http.StatusInternalServerError, res)
 }

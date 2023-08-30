@@ -13,6 +13,7 @@ func UserDomainToEntity(userDomain model.UserDomainInterface) entity.User {
 		Email:     userDomain.GetEmail(),
 		Username:  userDomain.GetUsername(),
 		Password:  userDomain.GetPassword(),
+		Verified:  userDomain.GetVerified(),
 	}
 }
 
@@ -25,6 +26,7 @@ func UserEntityToDomain(userEntity entity.User) model.UserDomainInterface {
 		userEntity.Password,
 	)
 	domain.SetID(userEntity.ID)
+	domain.SetVerified(userEntity.Verified)
 
 	return domain
 }

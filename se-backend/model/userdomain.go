@@ -19,8 +19,10 @@ type UserDomainInterface interface {
 	GetEmail() string
 	GetUsername() string
 	GetPassword() string
+	GetVerified() bool
 
 	SetID(ID uint64)
+	SetVerified(verified bool)
 
 	EncryptPassword()
 	GenerateToken() (string, seerror.SEError)
@@ -33,17 +35,20 @@ type userDomain struct {
 	email     string
 	username  string
 	password  string
+	verified  bool
 }
 
 func NewUserDomain(firstName, lastName, email, username, password string) UserDomainInterface {
 	caser := cases.Title(language.Und)
 
 	return &userDomain{
+		id:        0,
 		firstName: caser.String(strings.TrimSpace(firstName)),
 		lastName:  caser.String(strings.TrimSpace(lastName)),
 		email:     strings.ToLower(strings.TrimSpace(email)),
 		username:  strings.TrimSpace(username),
 		password:  password,
+		verified:  false,
 	}
 }
 
@@ -78,8 +83,16 @@ func (ud *userDomain) GetPassword() string {
 	return ud.password
 }
 
+func (ud *userDomain) GetVerified() bool {
+	return ud.verified
+}
+
 func (ud *userDomain) SetID(ID uint64) {
 	ud.id = ID
+}
+
+func (ud *userDomain) SetVerified(verified bool) {
+	ud.verified = verified
 }
 
 func (ud *userDomain) EncryptPassword() {
@@ -99,6 +112,7 @@ func (ud *userDomain) GenerateToken() (string, seerror.SEError) {
 		"lastName":  ud.lastName,
 		"email":     ud.email,
 		"username":  ud.username,
+		"verified":  ud.verified,
 		"exp":       time.Now().Add(5 * time.Minute).Unix(),
 	}
 
