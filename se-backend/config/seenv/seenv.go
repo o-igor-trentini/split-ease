@@ -53,6 +53,13 @@ func Init() {
 
 		// JWT
 		{Name: envJWTSecretKey},
+
+		// Email
+		{Name: envEmailAPIKey},
+		{Name: envEmailFrom},
+
+		// Frontend
+		{Name: envFrontendURLKey},
 	}
 
 	values, err := uenv.CheckEnvs(list)
@@ -76,5 +83,8 @@ func Init() {
 		DatabaseName:      values[envDatabaseName],
 		DatabaseSchema:    values[envDatabaseSchema],
 		JWTSecretKey:      values[envJWTSecretKey],
+		EmailAPIKey:       values[envEmailAPIKey],
+		EmailFrom:         values[envEmailFrom],
+		FrontendURL:       values[envFrontendURLKey],
 	}
 }

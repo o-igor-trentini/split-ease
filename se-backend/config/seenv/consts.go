@@ -28,6 +28,13 @@ const (
 
 	// JWT
 	envJWTSecretKey string = "JWT_SECRET_KEY"
+
+	// Email
+	envEmailAPIKey string = "EMAIL_API_KEY"
+	envEmailFrom   string = "EMAIL_FROM"
+
+	// Frontend
+	envFrontendURLKey string = "FRONTEND_URL"
 )
 
 // Possíveis valores das variáveis de ambiente
@@ -70,4 +77,7 @@ type ENVType struct {
 	DatabaseName      string
 	DatabaseSchema    string
 	JWTSecretKey      string
+	EmailAPIKey       string
+	EmailFrom         string
+	FrontendURL       string
 }

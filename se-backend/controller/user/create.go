@@ -18,7 +18,7 @@ func (co userImpl) Create(c *gin.Context) {
 		return
 	}
 
-	domain := model.NewUserDomain(
+	userDomain := model.NewUserDomain(
 		userRequest.FirstName,
 		userRequest.LastName,
 		userRequest.Email,
@@ -26,12 +26,15 @@ func (co userImpl) Create(c *gin.Context) {
 		userRequest.Password,
 	)
 
-	if err := co.service.Create(domain); err != nil {
+	if err := co.service.Create(userDomain); err != nil {
 		controller.RespondWithError(c, err)
 		return
 	}
 
-	// TODO: Criar verificação de conta do usuário por email.
+	if err := co.userActivationService.Create(userDomain); err != nil {
+		controller.RespondWithError(c, err)
+		return
+	}
 
-	c.JSON(http.StatusCreated, view.UserDomainToResponse(domain))
+	c.JSON(http.StatusCreated, view.UserDomainToResponse(userDomain))
 }

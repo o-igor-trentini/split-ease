@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}</title>
+</head>
+
+<body style="margin: 0; line-height: 1;">
+    <div style="width: 100%; background: #1A1A1A;">
+        <div style="margin: 1rem; border-radius: 0.4rem; overflow: hidden; background: #FFF;">
+            <div
+                style="
+                    padding: 2rem;
+                    background: {{ .PrimaryColor }};
+                    color: #FFF;
+                    text-align: center;
+                    vertical-align: middle;
+                    font-size: 2.4rem;
+                    font-weight: 700;
+                "
+            >
+                Verificação da conta
+            </div>
+
+            <div style="width: 100%; color: #000; text-align: center;">
+                <div style="width: 100%; padding: 1rem; color: #000;">
+                    <p style="margin: 0;">Olá {{ .Name }}!</p>
+
+                    <br/>
+
+                    <p style="width: 100%; margin: 0;">
+                        Bora verificar a sua conta :) Clique no botão abaixo para prosseguir:
+                    </p>
+                </div>
+
+                <div style="text-align: center">
+                    <button
+                        type="button"
+                        style="
+                            min-width: 20%;
+                            padding: 1rem;
+                            border: none;
+                            border-radius: 0.4rem;
+                            background: {{ .PrimaryColor }};
+                            color: #FFF;
+                        "
+                    >
+                        <a
+                            href="{{ .Link }}"
+                            target="_blank"
+                            style="text-decoration: none; color: #FFF; font-size: 1rem; font-weight: 700;"
+                        >
+                            Verificar
+                        </a>
+                    </button>
+                </div>
+
+                <div style="width: 100%; padding: 1rem; color: #000;">
+                    Caso não seja possível utilizar o botão acima, aqui está o link para a verificação da conta:
+                    <br/>
+                    <br/>
+
+                    <span>{{ .Link }}</span>
+                </div>
+
+                <div style="width: 100%; padding: 1rem; color: #000;">
+                    <p style="margin: 0;">
+                        - Split Ease
+                    </p>
+                </div>
+            </div>
+
+            <div style="text-align: center">
+                <div style="width: 100%; margin-top: 1rem; border-top: 1px solid #808080;"></div>
+
+                <div style="margin: 1rem 0; color: #808080;">
+                    <p style="margin: 0;">O link será válido até {{ .ExpirationDatetime }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

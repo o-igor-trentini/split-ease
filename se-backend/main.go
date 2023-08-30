@@ -45,9 +45,12 @@ func initDependencies(db *gorm.DB) routes.InitDependencies {
 	userDomainRepository := repository.NewUserDomain(db)
 	userDomainService := service.NewUserDomain(userDomainRepository)
 
+	userActivationDomainInterface := service.NewUserActivationDomain(repository.NewUserActivationDomain(db))
+	userActivationDomainService := service.NewUserActivationDomain(userActivationDomainInterface)
+
 	return routes.InitDependencies{
 		Middleware: middleware,
-		UserCo:     controller.NewUser(userDomainService),
+		UserCo:     controller.NewUser(userDomainService, userActivationDomainService),
 	}
 }
 

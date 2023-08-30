@@ -11,10 +11,14 @@ type UserController interface {
 }
 
 type userImpl struct {
-	service service.UserDomainService
+	service               service.UserDomainService
+	userActivationService service.UserActivationDomainService
 }
 
 // NewUser instância o controller de usuário.
-func NewUser(service service.UserDomainService) UserController {
-	return &userImpl{service}
+func NewUser(
+	service service.UserDomainService,
+	userActivationService service.UserActivationDomainService,
+) UserController {
+	return &userImpl{service, userActivationService}
 }
